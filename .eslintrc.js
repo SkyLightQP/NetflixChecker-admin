@@ -1,5 +1,10 @@
 module.exports = {
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended', 'next/core-web-vitals'],
+  extends: [
+    'airbnb',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+    'next/core-web-vitals'
+  ],
   parser: '@typescript-eslint/parser',
   globals: {
     JSX: true
@@ -15,6 +20,8 @@ module.exports = {
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
+    'react/jsx-filename-extension': 'off',
+    'react/prop-types': 'off'
   }
 };
