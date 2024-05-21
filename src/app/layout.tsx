@@ -1,10 +1,8 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { Providers } from '@/app/providers';
-
 import './global.css';
 
-const inter = Inter({ subsets: ['latin'] });
+import type { Metadata } from 'next';
+import { Providers } from '@/app/providers';
+import { pretendard } from '@/font';
 
 export const metadata: Metadata = {
   title: 'NetflixChecker Admin',
@@ -13,12 +11,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
+      <body className={pretendard.className}>
         <Providers>{children}</Providers>
       </body>
     </html>
