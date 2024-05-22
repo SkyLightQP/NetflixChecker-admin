@@ -1,17 +1,20 @@
 import '@/style/global.css';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 
 import type { Metadata } from 'next';
 import { Providers } from '@/app/providers';
 import { pretendard } from '@/font';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import { FC, PropsWithChildren } from 'react';
+
+config.autoAddCss = false;
 
 export const metadata: Metadata = {
   title: 'NetflixChecker Admin',
   description: 'Admin page(private) of NetflixChecker'
 };
 
-export default function RootLayout({
-  children
-}: Readonly<{ children: React.ReactNode }>) {
+const RootLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="ko">
       <body className={pretendard.className}>
@@ -19,4 +22,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
