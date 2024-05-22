@@ -22,6 +22,10 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'import/prefer-default-export': 'off',
     'react/jsx-filename-extension': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    'react/function-component-definition': [
+      2,
+      { namedComponents: ['arrow-function'] }
+    ]
   }
 };
