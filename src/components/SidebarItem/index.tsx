@@ -12,7 +12,7 @@ export const SidebarItem: FC<PropsWithChildren<SidebarItemProps>> = ({
 }) => {
   return (
     <li className="text-black font-bold text-lg py-3 px-6 mx-4 hover:bg-gray-950 hover:text-white rounded-lg cursor-pointer transition">
-      <FontAwesomeIcon icon={icon} className="mr-2" /> {children}
+      <FontAwesomeIcon icon={icon} className="w-8 mr-2" /> {children}
     </li>
   );
 };
