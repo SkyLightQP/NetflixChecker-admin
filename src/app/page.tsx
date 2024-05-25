@@ -2,7 +2,7 @@ import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import { DashboardHeader } from '@/components/DashboardHeader';
 import { SectionTitle } from '@/components/Paragraph/SectionTitle';
 
-const Home = () => {
+const Page = () => {
   return (
     <>
       <SectionTitle>대시보드</SectionTitle>
@@ -64,4 +64,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Page;
