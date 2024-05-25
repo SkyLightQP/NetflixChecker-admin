@@ -6,7 +6,7 @@ import { Providers } from '@/app/providers';
 import { pretendard } from '@/font';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { FC, PropsWithChildren } from 'react';
-import { SidebarLayout } from '@/app/SidebarLayout';
+import { SidebarLayout } from '@/layouts/SidebarLayout';
 
 config.autoAddCss = false;
 
