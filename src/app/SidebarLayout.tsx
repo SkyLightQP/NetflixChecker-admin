@@ -3,7 +3,13 @@ import { Sidebar } from '@/components/Sidebar';
 import { SidebarHeader } from '@/components/SidebarHeader';
 import { SidebarList } from '@/components/SidebarList';
 import { SidebarItem } from '@/components/SidebarItem';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import {
+  faGrip,
+  faMoneyBillTransfer,
+  faReceipt,
+  faSignOut
+} from '@fortawesome/free-solid-svg-icons';
+import { Divider } from '@nextui-org/react';
 
 export const SidebarLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -15,7 +21,11 @@ export const SidebarLayout: FC<PropsWithChildren> = ({ children }) => {
           </h1>
         </SidebarHeader>
         <SidebarList>
-          <SidebarItem icon={faHome}>대시보드</SidebarItem>
+          <SidebarItem icon={faGrip}>대시보드</SidebarItem>
+          <SidebarItem icon={faMoneyBillTransfer}>입금자 관리</SidebarItem>
+          <SidebarItem icon={faReceipt}>로그</SidebarItem>
+          <Divider className="ml-6 w-60" />
+          <SidebarItem icon={faSignOut}>로그아웃</SidebarItem>
         </SidebarList>
       </Sidebar>
       <div className="px-16 py-14">{children}</div>
