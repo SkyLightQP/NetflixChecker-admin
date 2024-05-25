@@ -1,17 +1,22 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC, PropsWithChildren } from 'react';
+import { FC, LiHTMLAttributes, PropsWithChildren } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { cn } from '@/utils/cn';
 
 interface SidebarItemProps {
   readonly icon: IconProp;
 }
 
-export const SidebarItem: FC<PropsWithChildren<SidebarItemProps>> = ({
-  children,
-  icon
-}) => {
+export const SidebarItem: FC<
+  PropsWithChildren<LiHTMLAttributes<never> & SidebarItemProps>
+> = ({ children, icon, className }) => {
   return (
-    <li className="text-black font-bold text-lg py-3 px-6 mx-4 hover:bg-gray-950 hover:text-white rounded-lg cursor-pointer transition">
+    <li
+      className={cn(
+        className,
+        'text-black font-bold text-lg py-3 px-6 mx-4 hover:bg-gray-950 hover:text-white rounded-lg cursor-pointer transition'
+      )}
+    >
       <FontAwesomeIcon icon={icon} className="w-8 mr-2" /> {children}
     </li>
   );
