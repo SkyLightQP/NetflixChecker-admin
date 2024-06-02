@@ -6,7 +6,6 @@ import { Providers } from '@/app/providers';
 import { pretendard } from '@/font';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { FC, PropsWithChildren } from 'react';
-import { SidebarLayout } from '@/layouts/SidebarLayout';
 
 config.autoAddCss = false;
 
@@ -20,7 +19,7 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => {
     <html lang="ko">
       <body className={pretendard.className}>
         <Providers>
-          <SidebarLayout>{children}</SidebarLayout>
+          <div className="w-full h-full bg-gray-50">{children}</div>
         </Providers>
       </body>
     </html>

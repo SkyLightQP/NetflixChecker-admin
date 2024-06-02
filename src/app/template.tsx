@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, PropsWithChildren } from 'react';
 import { Sidebar } from '@/components/Sidebar';
 import { SidebarHeader } from '@/components/SidebarHeader';
@@ -11,18 +13,25 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Divider } from '@nextui-org/react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-export const SidebarLayout: FC<PropsWithChildren> = ({ children }) => {
+const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
+  const pathname = usePathname();
+
+  if (pathname === '/login') {
+    return <>{children}</>;
+  }
+
   return (
-    <div className="w-full h-full bg-gray-50 flex flex-row">
+    <div className="flex flex-row">
       <Sidebar className="border-r-1 border-gray-200">
         <SidebarHeader>
           <h1 className="text-black font-bold text-2xl text-center">
-            <Link href="/">NetflixChecker</Link>
+            <Link href="/public">NetflixChecker</Link>
           </h1>
         </SidebarHeader>
         <SidebarList>
-          <Link href="/" className="block">
+          <Link href="/public" className="block">
             <SidebarItem icon={faGrip}>대시보드</SidebarItem>
           </Link>
           <Link href="/deposit" className="block">
@@ -39,3 +48,5 @@ export const SidebarLayout: FC<PropsWithChildren> = ({ children }) => {
     </div>
   );
 };
+
+export default SidebarTemplate;
