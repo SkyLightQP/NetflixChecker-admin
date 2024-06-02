@@ -14,8 +14,8 @@ import Link from 'next/link';
 
 export const SidebarLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="w-full h-full bg-gray-100 flex flex-row">
-      <Sidebar>
+    <div className="w-full h-full bg-gray-50 flex flex-row">
+      <Sidebar className="border-r-1 border-gray-200">
         <SidebarHeader>
           <h1 className="text-black font-bold text-2xl text-center">
             <Link href="/">NetflixChecker</Link>
