@@ -1,11 +1,13 @@
 import '@/style/global.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import type { Metadata } from 'next';
 import { Providers } from '@/app/providers';
 import { pretendard } from '@/font';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { FC, PropsWithChildren } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 config.autoAddCss = false;
 
@@ -20,6 +22,7 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => {
       <body className={pretendard.className}>
         <Providers>
           <div className="w-full min-h-screen bg-gray-50">{children}</div>
+          <ToastContainer position="top-right" />
         </Providers>
       </body>
     </html>
