@@ -19,7 +19,7 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => {
     <html lang="ko">
       <body className={pretendard.className}>
         <Providers>
-          <div className="w-full h-full bg-gray-50">{children}</div>
+          <div className="w-full min-h-screen bg-gray-50">{children}</div>
         </Providers>
       </body>
     </html>
