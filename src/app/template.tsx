@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useEffect } from 'react';
 import { Sidebar } from '@/components/Sidebar';
 import { SidebarHeader } from '@/components/SidebarHeader';
 import { SidebarList } from '@/components/SidebarList';
@@ -13,10 +13,23 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Divider } from '@nextui-org/react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { api } from '@/utils/fetch-api';
 
 const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { ok } = await api('/user/me', 'GET');
+      if (!ok) {
+        router.push('/login');
+      }
+    };
+
+    fetchData();
+  }, []);
 
   if (pathname === '/login') {
     return <>{children}</>;
@@ -27,11 +40,11 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
       <Sidebar className="border-r-1 border-gray-200">
         <SidebarHeader>
           <h1 className="text-black font-bold text-2xl text-center">
-            <Link href="/public">NetflixChecker</Link>
+            <Link href="/">NetflixChecker</Link>
           </h1>
         </SidebarHeader>
         <SidebarList>
-          <Link href="/public" className="block">
+          <Link href="/" className="block">
             <SidebarItem icon={faGrip}>대시보드</SidebarItem>
           </Link>
           <Link href="/deposit" className="block">
