@@ -1,12 +1,22 @@
 import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import { DashboardHeader } from '@/components/DashboardHeader';
 import { SectionTitle } from '@/components/Paragraph/SectionTitle';
+import { getDashboardMetrics } from '@/actions/dashboard-metrics.action';
+import { SUBSCRIBE_COST } from '@/constants/dashboard.constant';
 
-const Page = () => {
+const Page = async () => {
+  const {
+    depositCount,
+    depositLatest,
+    codeCount,
+    crawlingStatus,
+    crawlingLatest
+  } = await getDashboardMetrics();
+
   return (
     <>
       <SectionTitle>대시보드</SectionTitle>
-      <DashboardHeader cost={10000} />
+      <DashboardHeader cost={SUBSCRIBE_COST} />
       <div className="space-y-5">
         <div className="flex flex-row space-x-4">
           <Card className="w-60 p-2">
@@ -15,7 +25,7 @@ const Page = () => {
               <h4 className="font-bold text-large">입금 현황</h4>
             </CardHeader>
             <CardBody className="overflow-visible py-2">
-              <p className="text-lg">0 / 4</p>
+              <p className="text-lg">{depositCount} / 3</p>
             </CardBody>
           </Card>
 
@@ -25,7 +35,7 @@ const Page = () => {
               <h4 className="font-bold text-large">최근 입금자</h4>
             </CardHeader>
             <CardBody className="overflow-visible py-2">
-              <p className="text-lg">홍길동 (4,250 원)</p>
+              <p className="text-lg">{depositLatest}</p>
             </CardBody>
           </Card>
 
@@ -35,7 +45,7 @@ const Page = () => {
               <h4 className="font-bold text-large">인증코드 발급 회수</h4>
             </CardHeader>
             <CardBody className="overflow-visible py-2">
-              <p className="text-lg">4 번</p>
+              <p className="text-lg">{codeCount} 번</p>
             </CardBody>
           </Card>
         </div>
@@ -46,7 +56,7 @@ const Page = () => {
               <h4 className="font-bold text-large">최근 크롤링 성공 여부</h4>
             </CardHeader>
             <CardBody className="overflow-visible py-2">
-              <p className="text-lg">X</p>
+              <p className="text-lg">{crawlingStatus}</p>
             </CardBody>
           </Card>
 
@@ -55,7 +65,7 @@ const Page = () => {
               <h4 className="font-bold text-large">최근 크롤링 시각</h4>
             </CardHeader>
             <CardBody className="overflow-visible py-2">
-              <p className="text-lg">2024. 01. 01. 12:02</p>
+              <p className="text-lg">{crawlingLatest}</p>
             </CardBody>
           </Card>
         </div>
