@@ -38,19 +38,18 @@ const Page = async () => {
               <p className="text-lg">{depositLatest}</p>
             </CardBody>
           </Card>
+        </div>
 
+        <div className="flex flex-row space-x-4">
           <Card className="w-60 p-2">
             <CardHeader className="pb-0 pt-2 flex-col items-start">
-              <p className="text-tiny uppercase font-bold">5월</p>
               <h4 className="font-bold text-large">인증코드 발급 회수</h4>
             </CardHeader>
             <CardBody className="overflow-visible py-2">
               <p className="text-lg">{codeCount} 번</p>
             </CardBody>
           </Card>
-        </div>
 
-        <div className="flex flex-row space-x-4">
           <Card className="w-60 p-2">
             <CardHeader className="pb-0 pt-2 flex-col items-start">
               <h4 className="font-bold text-large">최근 크롤링 성공 여부</h4>
