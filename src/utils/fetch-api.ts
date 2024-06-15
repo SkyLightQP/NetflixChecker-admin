@@ -10,10 +10,17 @@ export const api = async (
       'Content-Type': 'application/json'
     },
     credentials: 'include',
+    cache: 'no-cache',
     body: JSON.stringify(body),
     ...options
   });
-  const json = await response.json();
+
+  let json = '';
+  try {
+    json = await response.json();
+  } catch (e) {
+    json = '';
+  }
 
   return {
     ok: response.ok,
