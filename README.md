@@ -1,4 +1,4 @@
-# NetflixChecker-admin
+# NetflixChecker-admin ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 
 > NetflixChecker 관리자 대시보드
 
