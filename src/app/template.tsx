@@ -31,6 +31,13 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
     fetchData();
   }, []);
 
+  const onLogoutClick = async () => {
+    const { ok } = await api('/auth/logout', 'DELETE');
+    if (ok) {
+      router.push('/login');
+    }
+  };
+
   if (pathname === '/login') {
     return <>{children}</>;
   }
@@ -54,7 +61,9 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
             <SidebarItem icon={faReceipt}>로그</SidebarItem>
           </Link>
           <Divider className="ml-6 w-60" />
-          <SidebarItem icon={faSignOut}>로그아웃</SidebarItem>
+          <SidebarItem icon={faSignOut} onClick={onLogoutClick}>
+            로그아웃
+          </SidebarItem>
         </SidebarList>
       </Sidebar>
       <div className="px-16 py-14">{children}</div>
