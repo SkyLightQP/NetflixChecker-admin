@@ -59,7 +59,7 @@ const Page: FC = () => {
 
   const onCrawlingClick = async () => {
     await api('/deposit/crawl', 'POST');
-    toast('크롤링 요청을 보냈습니다. 잠시만 기다려주세요.');
+    toast('크롤링 요청을 보냈습니다...');
   };
 
   const onAddClick = async (formData: FormData) => {
