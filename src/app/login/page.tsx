@@ -17,8 +17,12 @@ const Page: FC = () => {
       password: formData.get('password')
     };
 
-    const { ok, json } = await api('/auth/login', 'POST', rawFormData);
-    if (!ok) {
+    const { ok, json } = await api<{ message: string }>(
+      '/auth/login',
+      'POST',
+      rawFormData
+    );
+    if (!ok && json !== null) {
       toast(json.message);
       return;
     }
