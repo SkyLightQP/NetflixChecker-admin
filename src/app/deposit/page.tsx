@@ -130,12 +130,23 @@ const Page: FC = () => {
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => {
+                const calculatedMonth =
+                  (new Date(getKeyValue(item, 'date')).getMonth() +
+                    Number(getKeyValue(item, columnKey))) %
+                  12;
                 switch (columnKey) {
                   case 'cost':
                     return (
                       <TableCell>
                         {Number(getKeyValue(item, columnKey)).toLocaleString()}{' '}
                         원
+                      </TableCell>
+                    );
+                  case 'costMonth':
+                    return (
+                      <TableCell>
+                        {getKeyValue(item, columnKey)}달 (~ {calculatedMonth}
+                        월까지)
                       </TableCell>
                     );
                   default:
