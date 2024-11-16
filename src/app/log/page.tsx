@@ -41,10 +41,10 @@ const Page: FC = () => {
         className="w-[calc(100vw-26rem)] h-[calc(100vh-20rem)] overflow-auto"
         ref={logRef}
       >
-        {logs.map((log, index) => (
+        {logs?.map((log, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <p key={`log-${index}`}>{log}</p>
-        ))}
+        )) ?? ''}
       </Code>
     </>
   );
