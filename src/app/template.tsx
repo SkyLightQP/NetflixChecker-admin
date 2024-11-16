@@ -22,8 +22,12 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { ok } = await api('/user/me', 'GET');
-      if (!ok) {
+      try {
+        const { ok } = await api('/user/me', 'GET');
+        if (!ok) {
+          router.push('/login');
+        }
+      } catch (_) {
         router.push('/login');
       }
     };

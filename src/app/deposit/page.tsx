@@ -48,6 +48,7 @@ const columns = [
 
 const Page: FC = () => {
   const [rows, setRows] = useState<DepositorType[]>([]);
+  const [isDisableCrawling, setIsDisableCrawling] = useState(false);
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   const fetchData = useCallback(async () => {
@@ -58,8 +59,13 @@ const Page: FC = () => {
   }, []);
 
   const onCrawlingClick = async () => {
+    setIsDisableCrawling(true);
     await api('/deposit/crawl', 'POST');
     toast('크롤링 요청을 보냈습니다...');
+
+    setTimeout(() => {
+      setIsDisableCrawling(false);
+    }, 1000 * 10);
   };
 
   const onAddClick = async (formData: FormData) => {
@@ -104,6 +110,8 @@ const Page: FC = () => {
             color="primary"
             startContent={<FontAwesomeIcon icon={faRobot} />}
             onClick={onCrawlingClick}
+            disabled={isDisableCrawling}
+            isLoading={isDisableCrawling}
           >
             크롤링
           </Button>

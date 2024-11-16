@@ -9,6 +9,7 @@ export const api = async <T>(
     headers: {
       'Content-Type': 'application/json'
     },
+    signal: AbortSignal.timeout(1000 * 3),
     credentials: 'include',
     cache: 'no-cache',
     body: JSON.stringify(body),
