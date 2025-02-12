@@ -1,1 +1,1 @@
-export const SUBSCRIBE_COST = 4250;
+export const SUBSCRIBE_COST = 2875;
