@@ -153,7 +153,8 @@ const Page: FC = () => {
                   case 'costMonth':
                     return (
                       <TableCell>
-                        {getKeyValue(item, columnKey)}달 (~ {calculatedMonth}
+                        {getKeyValue(item, columnKey)}달 (~{' '}
+                        {calculatedMonth === 0 ? 12 : calculatedMonth}
                         월까지)
                       </TableCell>
                     );
