@@ -23,6 +23,8 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (pathname === '/public') return;
+
         const { ok } = await api('/user/me', 'GET');
         if (!ok) {
           router.push('/login');
