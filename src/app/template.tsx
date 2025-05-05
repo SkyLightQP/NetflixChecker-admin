@@ -42,7 +42,7 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  if (pathname === '/login') {
+  if (pathname === '/login' || pathname === '/public') {
     return <>{children}</>;
   }
 
