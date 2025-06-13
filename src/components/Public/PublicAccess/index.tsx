@@ -3,9 +3,8 @@
 import { FC } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
-import { Button, Input, Spacer } from '@heroui/react';
+import { addToast, Button, Input, Spacer } from '@heroui/react';
 import { api } from '@/utils/fetch-api';
-import { toast } from 'react-toastify';
 
 interface PublicAccessProps {
   readonly setLogin: (isLogin: boolean) => void;
@@ -23,7 +22,10 @@ export const PublicAccess: FC<PublicAccessProps> = ({ setLogin }) => {
       rawFormData
     );
     if (!ok && json !== null) {
-      toast.warn((json as { message: string }).message);
+      addToast({
+        title: (json as { message: string }).message,
+        color: 'warning'
+      });
       return;
     }
 

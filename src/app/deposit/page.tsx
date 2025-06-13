@@ -3,6 +3,7 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { SectionTitle } from '@/components/Paragraph/SectionTitle';
 import {
+  addToast,
   Button,
   getKeyValue,
   Table,
@@ -16,7 +17,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faRefresh, faRobot } from '@fortawesome/free-solid-svg-icons';
 import { api } from '@/utils/fetch-api';
-import { toast } from 'react-toastify';
 import { AddDepositorModal } from '@/components/Modal/AddDepositorModal';
 
 interface DepositorType {
@@ -61,7 +61,12 @@ const Page: FC = () => {
   const onCrawlingClick = async () => {
     setIsDisableCrawling(true);
     await api('/deposit/crawl', 'POST');
-    toast('크롤링 요청을 보냈습니다...');
+    addToast({
+      title: '크롤링 요청을 보냈습니다.',
+      promise: new Promise((resolve) => {
+        setTimeout(resolve, 2000);
+      })
+    });
 
     setTimeout(() => {
       setIsDisableCrawling(false);
@@ -82,14 +87,17 @@ const Page: FC = () => {
       rawFormData.cost === 0 ||
       rawFormData.costMonth === 0
     ) {
-      toast('모든 항목을 입력해주세요.', {
-        type: 'error'
+      addToast({
+        title: '모든 항목을 입력해주세요.',
+        color: 'warning'
       });
       return;
     }
 
     await api('/deposit', 'POST', rawFormData);
-    toast('입금자가 추가되었습니다.');
+    addToast({
+      title: '입금자 정보를 추가했습니다.'
+    });
     onClose();
     await fetchData();
   };

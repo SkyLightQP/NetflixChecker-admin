@@ -1,11 +1,10 @@
 'use client';
 
 import { FC } from 'react';
-import { Button, Input, Spacer } from '@heroui/react';
+import { addToast, Button, Input, Spacer } from '@heroui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { api } from '@/utils/fetch-api';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Title from '@/assets/title.png';
@@ -25,7 +24,9 @@ const Page: FC = () => {
       rawFormData
     );
     if (!ok && json !== null) {
-      toast(json.message);
+      addToast({
+        title: json.message
+      });
       return;
     }
 

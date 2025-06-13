@@ -1,9 +1,8 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { Button } from '@heroui/react';
+import { addToast, Button } from '@heroui/react';
 import { api } from '@/utils/fetch-api';
-import { toast } from 'react-toastify';
 import { cn } from '@/utils/cn';
 
 export const PublicVerify: FC = () => {
@@ -20,7 +19,10 @@ export const PublicVerify: FC = () => {
       window.localStorage.getItem('NetflixChecker_Public') || ''
     );
     if (!ok && json !== null) {
-      toast.warn((json as { message: string }).message);
+      addToast({
+        title: (json as { message: string }).message,
+        color: 'warning'
+      });
       return;
     }
 
@@ -60,7 +62,7 @@ export const PublicVerify: FC = () => {
           type="button"
           color={code ? 'default' : 'primary'}
           className="w-80"
-          onClick={onStartClick}
+          onPress={onStartClick}
           isDisabled={code !== undefined}
         >
           시작하기
