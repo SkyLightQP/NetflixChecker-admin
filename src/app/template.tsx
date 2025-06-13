@@ -11,10 +11,11 @@ import {
   faReceipt,
   faSignOut
 } from '@fortawesome/free-solid-svg-icons';
-import { Divider } from '@nextui-org/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { api } from '@/utils/fetch-api';
+import Image from 'next/image';
+import Title from '@/assets/title.png';
 
 const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
@@ -49,11 +50,18 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    <div className="flex flex-row">
-      <Sidebar className="border-r-1 border-gray-200">
+    <div className="flex flex-row bg-black text-white">
+      <Sidebar className="border-r-1 border-neutral-800 bg-neutral-950">
         <SidebarHeader>
-          <h1 className="text-black font-bold text-2xl text-center">
-            <Link href="/">NetflixChecker</Link>
+          <h1 className="text-black font-bold text-2xl flex justify-center items-center">
+            <Link href="/">
+              <Image
+                src={Title}
+                alt="NetflixChecker"
+                width={200}
+                className="select-none"
+              />
+            </Link>
           </h1>
         </SidebarHeader>
         <SidebarList>
@@ -66,7 +74,6 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
           <Link href="/log" className="block">
             <SidebarItem icon={faReceipt}>로그</SidebarItem>
           </Link>
-          <Divider className="ml-6 w-60" />
           <SidebarItem icon={faSignOut} onClick={onLogoutClick}>
             로그아웃
           </SidebarItem>

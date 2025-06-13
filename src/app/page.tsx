@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader } from '@nextui-org/card';
+import { Card, CardBody, CardHeader } from '@heroui/card';
 import { DashboardHeader } from '@/components/DashboardHeader';
 import { SectionTitle } from '@/components/Paragraph/SectionTitle';
 import { getDashboardMetrics } from '@/actions/dashboard-metrics.action';

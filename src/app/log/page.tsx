@@ -2,8 +2,8 @@
 
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { SectionTitle } from '@/components/Paragraph/SectionTitle';
-import { Code } from '@nextui-org/code';
-import { Button } from '@nextui-org/react';
+import { Code } from '@heroui/code';
+import { Button } from '@heroui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { api } from '@/utils/fetch-api';
@@ -32,7 +32,7 @@ const Page: FC = () => {
       <SectionTitle className="flex justify-between">
         <span>로그</span>
         <div>
-          <Button color="primary" onClick={fetchData}>
+          <Button color="primary" onPress={fetchData}>
             <FontAwesomeIcon icon={faRefresh} />
           </Button>
         </div>
@@ -43,7 +43,9 @@ const Page: FC = () => {
       >
         {logs?.map((log, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <p key={`log-${index}`}>{log}</p>
+          <p key={`log-${index}`} className="w-full whitespace-pre-wrap">
+            {log}
+          </p>
         )) ?? ''}
       </Code>
     </>

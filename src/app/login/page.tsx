@@ -1,12 +1,13 @@
 'use client';
 
 import { FC } from 'react';
-import { Button, Input, Spacer } from '@nextui-org/react';
+import { addToast, Button, Input, Spacer } from '@heroui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { api } from '@/utils/fetch-api';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import Title from '@/assets/title.png';
 
 const Page: FC = () => {
   const router = useRouter();
@@ -23,7 +24,9 @@ const Page: FC = () => {
       rawFormData
     );
     if (!ok && json !== null) {
-      toast(json.message);
+      addToast({
+        title: json.message
+      });
       return;
     }
 
@@ -31,11 +34,11 @@ const Page: FC = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
+    <div className="h-screen flex flex-col justify-center items-center bg-black">
       <div className="flex flex-col items-center">
-        <h1 className="font-bold text-3xl">
+        <h1 className="font-bold text-3xl flex items-center flex-col space-y-1">
           <FontAwesomeIcon icon={faScrewdriverWrench} size="sm" />
-          &nbsp;관리자 페이지
+          <Image src={Title} alt="NetflixChecker" width={240} />
         </h1>
         <Spacer y={6} />
         <form action={login} className="flex flex-col items-center">

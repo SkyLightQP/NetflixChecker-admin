@@ -15,7 +15,9 @@ export const DashboardHeader: FC<
         <span className="font-bold">{cost.toLocaleString('ko-KR')} 원</span>{' '}
         입니다.
       </h2>
-      <p className="text-lg text-gray-400">아래에서 요약 정보를 확인하세요.</p>
+      <p className="text-lg text-neutral-400">
+        아래에서 요약 정보를 확인하세요.
+      </p>
     </div>
   );
 };

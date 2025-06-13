@@ -1,8 +1,19 @@
 'use client';
 
-import { NextUIProvider } from '@nextui-org/react';
+import { HeroUIProvider, ToastProvider } from '@heroui/react';
 import { FC, PropsWithChildren } from 'react';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
-  return <NextUIProvider>{children}</NextUIProvider>;
+  return (
+    <HeroUIProvider>
+      <ToastProvider
+        toastOffset={24}
+        toastProps={{
+          radius: 'md'
+        }}
+        placement="top-center"
+      />
+      {children}
+    </HeroUIProvider>
+  );
 };
