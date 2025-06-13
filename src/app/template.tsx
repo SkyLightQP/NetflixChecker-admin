@@ -51,7 +51,7 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div className="flex flex-row bg-black text-white">
-      <Sidebar className="border-r-1 border-neutral-800 bg-stone-950">
+      <Sidebar className="border-r-1 border-neutral-800 bg-neutral-950">
         <SidebarHeader>
           <h1 className="text-black font-bold text-2xl flex justify-center items-center">
             <Link href="/">
