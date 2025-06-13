@@ -12,6 +12,9 @@ const config: Config = {
     extend: {
       fontFamily: {
         pretendard: ['var(--font-pretendard)']
+      },
+      colors: {
+        black: '#101010'
       }
     }
   },
