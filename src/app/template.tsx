@@ -11,7 +11,6 @@ import {
   faReceipt,
   faSignOut
 } from '@fortawesome/free-solid-svg-icons';
-import { Divider } from '@heroui/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { api } from '@/utils/fetch-api';
@@ -51,8 +50,8 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    <div className="flex flex-row">
-      <Sidebar className="border-r-1 border-gray-200">
+    <div className="flex flex-row bg-black text-white">
+      <Sidebar className="border-r-1 border-neutral-800 bg-stone-950">
         <SidebarHeader>
           <h1 className="text-black font-bold text-2xl flex justify-center items-center">
             <Link href="/">
@@ -75,7 +74,6 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
           <Link href="/log" className="block">
             <SidebarItem icon={faReceipt}>로그</SidebarItem>
           </Link>
-          <Divider className="ml-6 w-60" />
           <SidebarItem icon={faSignOut} onClick={onLogoutClick}>
             로그아웃
           </SidebarItem>

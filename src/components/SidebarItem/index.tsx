@@ -15,7 +15,7 @@ export const SidebarItem: FC<
     <li
       className={cn(
         className,
-        'text-black font-bold text-lg py-3 px-6 mx-4 hover:bg-gray-950 hover:text-white rounded-lg cursor-pointer transition'
+        'text-white font-bold text-lg py-3 px-6 mx-5 hover:bg-neutral-200 hover:text-black rounded-lg cursor-pointer transition'
       )}
       {...props}
     >

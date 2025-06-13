@@ -8,6 +8,7 @@ import { pretendard } from '@/font';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { FC, PropsWithChildren } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { cn } from '@/utils/cn';
 
 config.autoAddCss = false;
 
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 const RootLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="ko">
-      <body className={pretendard.className}>
+      <body className={cn(pretendard.className, 'text-white dark')}>
         <Providers>
           <div className="w-full min-h-screen bg-gray-50">{children}</div>
           <ToastContainer position="top-right" />
