@@ -15,6 +15,8 @@ import { Divider } from '@heroui/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { api } from '@/utils/fetch-api';
+import Image from 'next/image';
+import Title from '@/assets/title.png';
 
 const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
@@ -52,8 +54,15 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
     <div className="flex flex-row">
       <Sidebar className="border-r-1 border-gray-200">
         <SidebarHeader>
-          <h1 className="text-black font-bold text-2xl text-center">
-            <Link href="/">NetflixChecker</Link>
+          <h1 className="text-black font-bold text-2xl flex justify-center items-center">
+            <Link href="/">
+              <Image
+                src={Title}
+                alt="NetflixChecker"
+                width={200}
+                className="select-none"
+              />
+            </Link>
           </h1>
         </SidebarHeader>
         <SidebarList>
