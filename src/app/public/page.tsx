@@ -8,8 +8,8 @@ const Page: FC = () => {
   const [isLogin, setLogin] = useState(false);
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center lg:bg-gray-50 bg-white pb-10">
-      <div className="w-[390px] h-screen bg-white flex flex-col items-center justify-center">
+    <div className="h-screen flex flex-col justify-center items-center lg:bg-neutral-950 bg-black pb-10">
+      <div className="w-[390px] h-screen bg-black flex flex-col items-center justify-center">
         {isLogin ? <PublicVerify /> : <PublicAccess setLogin={setLogin} />}
       </div>
     </div>

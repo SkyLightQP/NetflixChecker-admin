@@ -33,12 +33,12 @@ export const PublicVerify: FC = () => {
     <>
       <p className="text-center text-lg font-semibold">
         넷플릭스에서
-        <span className="bg-red-100 py-1 px-1.5 rounded-lg mx-1">
+        <span className="bg-red-500 py-1 px-1.5 rounded-lg mx-1">
           이메일로 받기
         </span>
         를 누른 후
         <br />
-        <span className="py-1 px-1.5 rounded-lg bg-blue-100 mx-1">
+        <span className="py-1 px-1.5 rounded-lg bg-blue-500 mx-1">
           시작하기
         </span>
         를 누르면 완료 버튼이 나와요.
