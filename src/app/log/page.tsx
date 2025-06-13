@@ -32,7 +32,7 @@ const Page: FC = () => {
       <SectionTitle className="flex justify-between">
         <span>로그</span>
         <div>
-          <Button color="primary" onClick={fetchData}>
+          <Button color="primary" onPress={fetchData}>
             <FontAwesomeIcon icon={faRefresh} />
           </Button>
         </div>
@@ -43,7 +43,9 @@ const Page: FC = () => {
       >
         {logs?.map((log, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <p key={`log-${index}`}>{log}</p>
+          <p key={`log-${index}`} className="w-full whitespace-pre-wrap">
+            {log}
+          </p>
         )) ?? ''}
       </Code>
     </>
