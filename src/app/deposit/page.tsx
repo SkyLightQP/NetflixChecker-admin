@@ -111,13 +111,13 @@ const Page: FC = () => {
       <SectionTitle className="flex justify-between">
         <span>입금자 관리</span>
         <div className="space-x-2">
-          <Button color="primary" onClick={fetchData}>
+          <Button color="primary" onPress={fetchData}>
             <FontAwesomeIcon icon={faRefresh} />
           </Button>
           <Button
             color="primary"
             startContent={<FontAwesomeIcon icon={faRobot} />}
-            onClick={onCrawlingClick}
+            onPress={onCrawlingClick}
             disabled={isDisableCrawling}
             isLoading={isDisableCrawling}
           >
@@ -126,7 +126,7 @@ const Page: FC = () => {
           <Button
             color="primary"
             startContent={<FontAwesomeIcon icon={faPlus} />}
-            onClick={onOpen}
+            onPress={onOpen}
           >
             수동 추가
           </Button>

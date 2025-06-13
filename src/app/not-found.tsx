@@ -12,7 +12,7 @@ const NotFound: FC = () => {
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-lg font-bold">존재하지 않는 페이지입니다</h1>
         <Spacer y={2} />
-        <Button color="primary" onClick={() => router.back()}>
+        <Button color="primary" onPress={() => router.back()}>
           돌아가기
         </Button>
       </div>
