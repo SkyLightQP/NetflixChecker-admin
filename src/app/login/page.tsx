@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { Button, Input, Spacer } from '@nextui-org/react';
+import { Button, Input, Spacer } from '@heroui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { api } from '@/utils/fetch-api';

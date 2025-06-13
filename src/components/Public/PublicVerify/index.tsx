@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 import { api } from '@/utils/fetch-api';
 import { toast } from 'react-toastify';
 import { cn } from '@/utils/cn';

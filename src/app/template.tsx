@@ -11,7 +11,7 @@ import {
   faReceipt,
   faSignOut
 } from '@fortawesome/free-solid-svg-icons';
-import { Divider } from '@nextui-org/react';
+import { Divider } from '@heroui/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { api } from '@/utils/fetch-api';

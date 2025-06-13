@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { Button, Spacer } from '@nextui-org/react';
+import { Button, Spacer } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 
 const NotFound: FC = () => {

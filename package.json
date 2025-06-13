@@ -13,7 +13,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.1",
-    "@nextui-org/react": "^2.3.6",
+    "@heroui/react": "2.7.10",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.4",
     "next": "^15.3.1",
