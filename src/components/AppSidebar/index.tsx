@@ -14,6 +14,7 @@ import { SIDEBAR_MENUS } from '@/constants/sidebar.constant';
 import { LogOutIcon } from 'lucide-react';
 import { api } from '@/lib/fetch-api';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export const AppSidebar = () => {
   const router = useRouter();
@@ -33,15 +34,17 @@ export const AppSidebar = () => {
           <SidebarGroupContent className="flex flex-col gap-2">
             <SidebarMenu>
               {SIDEBAR_MENUS.map((menu) => (
-                <SidebarMenuItem key={`${menu.name}-${menu.path}`}>
-                  <SidebarMenuButton
-                    tooltip={menu.name}
-                    className="cursor-pointer"
-                  >
-                    <menu.icon />
-                    <span>{menu.name}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <Link href={menu.path} key={`${menu.name}-${menu.path}`}>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      tooltip={menu.name}
+                      className="cursor-pointer"
+                    >
+                      <menu.icon />
+                      <span>{menu.name}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </Link>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
