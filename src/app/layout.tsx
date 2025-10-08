@@ -3,7 +3,7 @@ import '@/style/global.css';
 import type { Metadata } from 'next';
 import { pretendard } from '@/font';
 import { FC, PropsWithChildren } from 'react';
-import { cn } from '@/lib/utils';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: 'NetflixChecker Admin',
@@ -13,8 +13,9 @@ export const metadata: Metadata = {
 const RootLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="ko">
-      <body className={cn(pretendard.className)}>
+      <body className={pretendard.className}>
         <div className="w-full min-h-screen bg-gray-50">{children}</div>
+        <Toaster position="top-right" />
       </body>
     </html>
   );
