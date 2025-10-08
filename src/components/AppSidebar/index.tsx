@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Sidebar,
   SidebarContent,
@@ -10,8 +12,19 @@ import {
 import { AppSidebarHeader } from '@/components/AppSidebarHeader';
 import { SIDEBAR_MENUS } from '@/constants/sidebar.constant';
 import { LogOutIcon } from 'lucide-react';
+import { api } from '@/lib/fetch-api';
+import { useRouter } from 'next/navigation';
 
 export const AppSidebar = () => {
+  const router = useRouter();
+
+  const onLogoutClick = async () => {
+    const { ok } = await api('/auth/logout', 'DELETE');
+    if (ok) {
+      router.push('/login');
+    }
+  };
+
   return (
     <Sidebar collapsible="offcanvas" variant="inset">
       <AppSidebarHeader />
@@ -37,7 +50,10 @@ export const AppSidebar = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton className="cursor-pointer">
+                <SidebarMenuButton
+                  className="cursor-pointer"
+                  onClick={onLogoutClick}
+                >
                   <LogOutIcon />
                   <span>로그아웃</span>
                 </SidebarMenuButton>

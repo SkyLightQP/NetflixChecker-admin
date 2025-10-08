@@ -28,13 +28,6 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
     fetchData();
   }, []);
 
-  const onLogoutClick = async () => {
-    const { ok } = await api('/auth/logout', 'DELETE');
-    if (ok) {
-      router.push('/login');
-    }
-  };
-
   if (pathname === '/login' || pathname === '/public') {
     return <>{children}</>;
   }
