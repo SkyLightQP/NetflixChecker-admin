@@ -1,21 +1,11 @@
 'use client';
 
 import { FC, PropsWithChildren, useEffect } from 'react';
-import { Sidebar } from '@/components/Sidebar';
-import { SidebarHeader } from '@/components/SidebarHeader';
-import { SidebarList } from '@/components/SidebarList';
-import { SidebarItem } from '@/components/SidebarItem';
-import {
-  faGrip,
-  faMoneyBillTransfer,
-  faReceipt,
-  faSignOut
-} from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { api } from '@/utils/fetch-api';
-import Image from 'next/image';
-import Title from '@/assets/title.png';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { api } from '@/lib/fetch-api';
+import { AppSidebar } from '@/components/AppSidebar';
+import { Header } from '@/components/Header';
 
 const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
@@ -50,37 +40,26 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    <div className="flex flex-row bg-black text-white">
-      <Sidebar className="border-r-1 border-neutral-800 bg-neutral-950">
-        <SidebarHeader>
-          <h1 className="text-black font-bold text-2xl flex justify-center items-center">
-            <Link href="/">
-              <Image
-                src={Title}
-                alt="NetflixChecker"
-                width={200}
-                className="select-none"
-              />
-            </Link>
-          </h1>
-        </SidebarHeader>
-        <SidebarList>
-          <Link href="/" className="block">
-            <SidebarItem icon={faGrip}>대시보드</SidebarItem>
-          </Link>
-          <Link href="/deposit" className="block">
-            <SidebarItem icon={faMoneyBillTransfer}>입금자 관리</SidebarItem>
-          </Link>
-          <Link href="/log" className="block">
-            <SidebarItem icon={faReceipt}>로그</SidebarItem>
-          </Link>
-          <SidebarItem icon={faSignOut} onClick={onLogoutClick}>
-            로그아웃
-          </SidebarItem>
-        </SidebarList>
-      </Sidebar>
-      <div className="px-16 py-14">{children}</div>
-    </div>
+    <SidebarProvider
+      style={
+        {
+          '--sidebar-width': 'calc(var(--spacing) * 72)',
+          '--header-height': 'calc(var(--spacing) * 12)'
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar />
+      <SidebarInset>
+        <Header title="Dashboard" />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 p-4 md:gap-6 md:py-6">
+              {children}
+            </div>
+          </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 };
 
