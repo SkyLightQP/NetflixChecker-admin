@@ -1,6 +1,6 @@
 'use server';
 
-import { api } from '@/utils/fetch-api';
+import { api } from '@/lib/fetch-api';
 
 export const getDashboardMetrics = async () => {
   const { json: depositCount } = await api<{ result: number }>(
