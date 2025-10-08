@@ -1,11 +1,14 @@
 'use client';
 
-import { FC, PropsWithChildren, useEffect } from 'react';
+import { CSSProperties, FC, PropsWithChildren, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { api } from '@/lib/fetch-api';
 import { AppSidebar } from '@/components/AppSidebar';
 import { Header } from '@/components/Header';
+
+const EXCLUDE_SIDEBAR_PATHS = ['/login', '/public'];
+const ALLOW_PATHS = ['/login', '/public'];
 
 const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
@@ -14,7 +17,7 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (pathname === '/public') return;
+        if (ALLOW_PATHS.includes(pathname)) return;
 
         const { ok } = await api('/user/me', 'GET');
         if (!ok) {
@@ -25,10 +28,10 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
       }
     };
 
-    fetchData();
-  }, []);
+    fetchData().then();
+  }, [router, pathname]);
 
-  if (pathname === '/login' || pathname === '/public') {
+  if (EXCLUDE_SIDEBAR_PATHS.includes(pathname)) {
     return <>{children}</>;
   }
 
@@ -38,7 +41,7 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
         {
           '--sidebar-width': 'calc(var(--spacing) * 72)',
           '--header-height': 'calc(var(--spacing) * 12)'
-        } as React.CSSProperties
+        } as CSSProperties
       }
     >
       <AppSidebar />
