@@ -1,20 +1,12 @@
-'use client';
-
 import { FC } from 'react';
-import { Button, Spacer } from '@heroui/react';
-import { useRouter } from 'next/navigation';
+import { TriangleAlertIcon } from 'lucide-react';
 
 const NotFound: FC = () => {
-  const router = useRouter();
-
   return (
-    <div className="h-full w-[calc(100vw-26rem)] flex flex-col justify-center items-center">
+    <div className="h-[calc(100vh-300px)] flex flex-col justify-center items-center">
       <div className="flex flex-col justify-center items-center">
-        <h1 className="text-lg font-bold">존재하지 않는 페이지입니다</h1>
-        <Spacer y={2} />
-        <Button color="primary" onPress={() => router.back()}>
-          돌아가기
-        </Button>
+        <TriangleAlertIcon size={28} />
+        <h1 className="text-lg font-bold mt-1">Not Found</h1>
       </div>
     </div>
   );
