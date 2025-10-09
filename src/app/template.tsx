@@ -10,6 +10,13 @@ import { Header } from '@/components/Header';
 const EXCLUDE_SIDEBAR_PATHS = ['/login', '/public'];
 const ALLOW_PATHS = ['/login', '/public'];
 
+const HEADER_TITLE: Record<string, string> = {
+  '/': 'Dashboard',
+  '/deposit': 'Deposits',
+  '/log': 'Log',
+  '/settings': 'Settings'
+};
+
 const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -46,7 +53,7 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
     >
       <AppSidebar />
       <SidebarInset>
-        <Header title="Dashboard" />
+        <Header title={HEADER_TITLE[pathname ?? '/'] ?? 'NetflixChecker'} />
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 p-7 md:gap-6 md:py-6">
