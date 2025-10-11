@@ -27,6 +27,8 @@ import {
   RefreshCwIcon
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { AddDepositorDialog } from '@/components/Dialog/AddDepositorDialog';
 
 interface DepositPayload {
   readonly id: number;
@@ -121,12 +123,12 @@ const Page: FC = () => {
       rawFormData.cost === 0 ||
       rawFormData.costMonth === 0
     ) {
-      // toast 모든 항목을 입력해주세요.
+      toast.warning('모든 항목을 입력해주세요.');
       return;
     }
 
     await api('/deposit', 'POST', rawFormData);
-    // toast 입금자 정보를 추가했습니다.
+    toast.success('입금 정보를 추가했습니다.');
     await fetchData();
   };
 
@@ -147,9 +149,14 @@ const Page: FC = () => {
         >
           <BotIcon /> 크롤링
         </Button>
-        <Button className="cursor-pointer">
-          <PlusIcon /> 수동 추가
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="cursor-pointer">
+              <PlusIcon /> 수동 추가
+            </Button>
+          </DialogTrigger>
+          <AddDepositorDialog action={onAddClick} />
+        </Dialog>
       </div>
       <div className="rounded-md border max-h-[calc(100vh-12rem)] overflow-y-auto">
         <Table>
