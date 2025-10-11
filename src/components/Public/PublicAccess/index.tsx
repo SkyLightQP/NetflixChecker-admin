@@ -47,7 +47,7 @@ export const PublicAccess: FC<PublicAccessProps> = ({ setLogin }) => {
           name="password"
           placeholder="비밀번호"
         />
-        <Button type="submit" color="primary" className="w-full cursor-pointer">
+        <Button type="submit" className="w-full cursor-pointer">
           들어가기
         </Button>
       </form>

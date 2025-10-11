@@ -49,7 +49,6 @@ export const PublicVerify: FC = () => {
       <div className="space-y-2 flex justify-center flex-col mt-6">
         <Button
           type="button"
-          color="primary"
           className={cn('w-80 cursor-pointer', !code && 'hidden')}
           asChild
         >
@@ -57,7 +56,6 @@ export const PublicVerify: FC = () => {
         </Button>
         <Button
           type="button"
-          color={code ? 'default' : 'primary'}
           className="w-80 cursor-pointer"
           onClick={onStartClick}
           disabled={code !== undefined}

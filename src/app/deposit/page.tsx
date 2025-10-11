@@ -71,11 +71,10 @@ const columns: ColumnDef<DepositPayload>[] = [
     cell: ({ row }) => {
       const startDate = new Date(row.getValue('date'));
       const costMonth = Number(row.getValue('costMonth'));
-      // Add costMonth months to startDate
       const endDate = new Date(startDate);
       endDate.setMonth(startDate.getMonth() + costMonth);
-      const endMonth = endDate.getMonth() + 1; // getMonth() is 0-based
-      const endYear = endDate.getFullYear();
+      const endMonth = endDate.getMonth(); // 입금 당월 포함 계산
+      const endYear = endDate.getFullYear().toString().slice(-2);
       return `${costMonth}개월 (~${endYear}년 ${endMonth}월까지)`;
     }
   }
