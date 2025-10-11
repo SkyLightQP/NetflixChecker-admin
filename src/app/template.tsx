@@ -6,16 +6,14 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { api } from '@/lib/fetch-api';
 import { AppSidebar } from '@/components/AppSidebar';
 import { Header } from '@/components/Header';
+import { SIDEBAR_MENUS } from '@/constants/sidebar.constant';
 
 const EXCLUDE_SIDEBAR_PATHS = ['/login', '/public'];
 const ALLOW_PATHS = ['/login', '/public'];
 
-const HEADER_TITLE: Record<string, string> = {
-  '/': 'Dashboard',
-  '/deposit': 'Deposits',
-  '/log': 'Log',
-  '/settings': 'Settings'
-};
+const HEADER_TITLE = new Map<string, string>(
+  SIDEBAR_MENUS.map((menu) => [menu.path, menu.name])
+);
 
 const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
@@ -53,7 +51,7 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
     >
       <AppSidebar />
       <SidebarInset>
-        <Header title={HEADER_TITLE[pathname ?? '/'] ?? 'NetflixChecker'} />
+        <Header title={HEADER_TITLE.get(pathname ?? '/') ?? 'NetflixChecker'} />
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 p-7 md:gap-6 md:py-6">
