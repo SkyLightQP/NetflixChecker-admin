@@ -28,15 +28,17 @@ const Page: FC = () => {
 
   return (
     <>
-      <Button
-        size="icon"
-        className="cursor-pointer"
-        onClick={() => {
-          fetchData().then(() => toast.success('로그 새로고침 완료'));
-        }}
-      >
-        <RefreshCwIcon />
-      </Button>
+      <div className="flex justify-end">
+        <Button
+          className="cursor-pointer"
+          onClick={() => {
+            fetchData().then(() => toast.success('로그 새로고침 완료'));
+          }}
+        >
+          <RefreshCwIcon />
+          <span>새로고침</span>
+        </Button>
+      </div>
       <Textarea
         ref={logRef}
         className="h-[calc(100vh-20rem)] overflow-auto disabled:text-black disabled:opacity-100"
