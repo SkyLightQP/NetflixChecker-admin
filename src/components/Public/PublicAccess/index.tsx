@@ -1,10 +1,11 @@
 'use client';
 
 import { FC } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilm } from '@fortawesome/free-solid-svg-icons';
-import { addToast, Button, Input, Spacer } from '@heroui/react';
-import { api } from '@/utils/fetch-api';
+import { api } from '@/lib/fetch-api';
+import { toast } from 'sonner';
+import { FilmIcon, KeyRoundIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 interface PublicAccessProps {
   readonly setLogin: (isLogin: boolean) => void;
@@ -22,10 +23,7 @@ export const PublicAccess: FC<PublicAccessProps> = ({ setLogin }) => {
       rawFormData
     );
     if (!ok && json !== null) {
-      addToast({
-        title: (json as { message: string }).message,
-        color: 'warning'
-      });
+      toast.warning((json as { message: string }).message);
       return;
     }
 
@@ -38,20 +36,18 @@ export const PublicAccess: FC<PublicAccessProps> = ({ setLogin }) => {
 
   return (
     <>
-      <h1 className="font-bold text-3xl">
-        <FontAwesomeIcon icon={faFilm} size="sm" />
-        &nbsp;
+      <h1 className="font-bold text-3xl flex space-x-0.5 mb-5">
+        <FilmIcon />
+        <KeyRoundIcon />
       </h1>
-      <Spacer y={6} />
-      <form action={login} className="flex flex-col items-center">
+      <form action={login} className="grid gap-2">
         <Input
           className="w-80"
           type="password"
-          label="비밀번호"
           name="password"
+          placeholder="비밀번호"
         />
-        <Spacer y={4} />
-        <Button type="submit" color="primary" className="w-full">
+        <Button type="submit" className="w-full cursor-pointer">
           들어가기
         </Button>
       </form>

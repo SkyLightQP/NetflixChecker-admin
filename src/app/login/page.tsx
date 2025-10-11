@@ -1,13 +1,20 @@
 'use client';
 
 import { FC } from 'react';
-import { addToast, Button, Input, Spacer } from '@heroui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
-import { api } from '@/utils/fetch-api';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import Title from '@/assets/title.png';
+import { api } from '@/lib/fetch-api';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
 
 const Page: FC = () => {
   const router = useRouter();
@@ -18,15 +25,14 @@ const Page: FC = () => {
       password: formData.get('password')
     };
 
-    const { ok, json } = await api<{ message: string }>(
+    const { ok, json } = await api<{ message: string; error: string }>(
       '/auth/login',
       'POST',
       rawFormData
     );
+
     if (!ok && json !== null) {
-      addToast({
-        title: json.message
-      });
+      toast.error(json.message || json.error);
       return;
     }
 
@@ -34,28 +40,40 @@ const Page: FC = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center bg-black">
-      <div className="flex flex-col items-center">
-        <h1 className="font-bold text-3xl flex items-center flex-col space-y-1">
-          <FontAwesomeIcon icon={faScrewdriverWrench} size="sm" />
-          <Image src={Title} alt="NetflixChecker" width={240} />
-        </h1>
-        <Spacer y={6} />
-        <form action={login} className="flex flex-col items-center">
-          <Input className="w-80" type="email" label="이메일" name="email" />
-          <Spacer y={4} />
-          <Input
-            className="w-80"
-            type="password"
-            label="비밀번호"
-            name="password"
-          />
-          <Spacer y={4} />
-          <Button type="submit" color="primary" className="w-60">
-            로그인
-          </Button>
-        </form>
-      </div>
+    <div className="h-screen flex flex-col justify-center items-center">
+      <form action={login} className="flex flex-col items-center">
+        <Card className="w-96">
+          <CardHeader>
+            <CardTitle>NetflixChecker</CardTitle>
+            <CardDescription>로그인하기</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="email">이메일</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="foobar@acme.com"
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label htmlFor="password">비밀번호</Label>
+                </div>
+                <Input id="password" name="password" type="password" required />
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-end">
+            <Button type="submit" className="cursor-pointer">
+              로그인
+            </Button>
+          </CardFooter>
+        </Card>
+      </form>
     </div>
   );
 };
