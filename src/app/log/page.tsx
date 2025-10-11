@@ -28,7 +28,7 @@ const Page: FC = () => {
 
   return (
     <>
-      <div className="flex justify-end">
+      <div className="flex">
         <Button
           className="cursor-pointer"
           onClick={() => {
@@ -41,7 +41,7 @@ const Page: FC = () => {
       </div>
       <Textarea
         ref={logRef}
-        className="h-[calc(100vh-20rem)] overflow-auto disabled:text-black disabled:opacity-100"
+        className="h-[calc(100vh-12rem)] overflow-auto disabled:text-black disabled:opacity-100"
         value={logs.join('\n')}
         disabled
       />

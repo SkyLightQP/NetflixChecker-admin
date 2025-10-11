@@ -1,25 +1,34 @@
 'use client';
 
 import { FC, useCallback, useEffect, useState } from 'react';
-import { SectionTitle } from '@/components/Paragraph/SectionTitle';
+import { api } from '@/lib/fetch-api';
 import {
-  addToast,
-  Button,
-  getKeyValue,
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable
+} from '@tanstack/react-table';
+import {
   Table,
   TableBody,
   TableCell,
-  TableColumn,
+  TableHead,
   TableHeader,
-  TableRow,
-  useDisclosure
-} from '@heroui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faRefresh, faRobot } from '@fortawesome/free-solid-svg-icons';
-import { api } from '@/utils/fetch-api';
-import { AddDepositorModal } from '@/components/Modal/AddDepositorModal';
+  TableRow
+} from '@/components/ui/table';
+import { formatNumber } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import {
+  ArrowUpDownIcon,
+  BotIcon,
+  PlusIcon,
+  RefreshCwIcon
+} from 'lucide-react';
+import { toast } from 'sonner';
 
-interface DepositorType {
+interface DepositPayload {
   readonly id: number;
   readonly name: string;
   readonly cost: number;
@@ -27,47 +36,72 @@ interface DepositorType {
   readonly costMonth: number;
 }
 
-const columns = [
+const columns: ColumnDef<DepositPayload>[] = [
   {
-    key: 'date',
-    label: '입금 날짜'
+    accessorKey: 'date',
+    header: ({ column }) => {
+      return (
+        <Button
+          className="cursor-pointer"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          입금 날짜
+          <ArrowUpDownIcon className="ml-0.5" />
+        </Button>
+      );
+    }
   },
   {
-    key: 'who',
-    label: '이름'
+    accessorKey: 'who',
+    header: '이름'
   },
   {
-    key: 'cost',
-    label: '금액'
+    accessorKey: 'cost',
+    header: '입금액',
+    cell: ({ row }) => {
+      return `${formatNumber(Number(row.getValue('cost')))} 원`;
+    }
   },
   {
-    key: 'costMonth',
-    label: '입금 인정 날짜'
+    accessorKey: 'costMonth',
+    header: '입금 인정 기간',
+    cell: ({ row }) => {
+      const calculatedMonth =
+        (new Date(row.getValue('date')).getMonth() +
+          Number(row.getValue('costMonth'))) %
+        12;
+      return `${row.getValue('costMonth')}개월 (~${calculatedMonth === 0 ? 12 : calculatedMonth}월까지)`;
+    }
   }
 ];
 
 const Page: FC = () => {
-  const [rows, setRows] = useState<DepositorType[]>([]);
+  const [rows, setRows] = useState<DepositPayload[]>([]);
   const [isDisableCrawling, setIsDisableCrawling] = useState(false);
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const table = useReactTable({
+    data: rows,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting
+    }
+  });
 
   const fetchData = useCallback(async () => {
-    const { json } = await api<{ result: DepositorType[] }>('/deposit', 'GET');
+    const { json } = await api<{ result: DepositPayload[] }>('/deposit', 'GET');
     if (json !== null) {
-      setRows(json.result as DepositorType[]);
+      setRows(json.result as DepositPayload[]);
     }
   }, []);
 
   const onCrawlingClick = async () => {
     setIsDisableCrawling(true);
     await api('/deposit/crawl', 'POST');
-    addToast({
-      title: '크롤링 요청을 보냈습니다.',
-      promise: new Promise((resolve) => {
-        setTimeout(resolve, 2000);
-      })
-    });
-
+    toast.info('수동 크롤링을 시작했습니다.');
     setTimeout(() => {
       setIsDisableCrawling(false);
     }, 1000 * 10);
@@ -87,18 +121,12 @@ const Page: FC = () => {
       rawFormData.cost === 0 ||
       rawFormData.costMonth === 0
     ) {
-      addToast({
-        title: '모든 항목을 입력해주세요.',
-        color: 'warning'
-      });
+      // toast 모든 항목을 입력해주세요.
       return;
     }
 
     await api('/deposit', 'POST', rawFormData);
-    addToast({
-      title: '입금자 정보를 추가했습니다.'
-    });
-    onClose();
+    // toast 입금자 정보를 추가했습니다.
     await fetchData();
   };
 
@@ -108,80 +136,71 @@ const Page: FC = () => {
 
   return (
     <>
-      <SectionTitle className="flex justify-between">
-        <span>입금자 관리</span>
-        <div className="space-x-2">
-          <Button color="primary" onPress={fetchData}>
-            <FontAwesomeIcon icon={faRefresh} />
-          </Button>
-          <Button
-            color="primary"
-            startContent={<FontAwesomeIcon icon={faRobot} />}
-            onPress={onCrawlingClick}
-            disabled={isDisableCrawling}
-            isLoading={isDisableCrawling}
-          >
-            크롤링
-          </Button>
-          <Button
-            color="primary"
-            startContent={<FontAwesomeIcon icon={faPlus} />}
-            onPress={onOpen}
-          >
-            수동 추가
-          </Button>
-        </div>
-      </SectionTitle>
-      <Table
-        isHeaderSticky
-        aria-label="입금자 정보 표"
-        className="w-[calc(100vw-26rem)] max-h-[calc(100vh-14rem)] overflow-y-auto"
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody emptyContent="입금 기록이 없습니다." items={rows}>
-          {(item) => (
-            <TableRow key={item.id}>
-              {(columnKey) => {
-                const calculatedMonth =
-                  (new Date(getKeyValue(item, 'date')).getMonth() +
-                    Number(getKeyValue(item, columnKey))) %
-                  12;
-                switch (columnKey) {
-                  case 'cost':
-                    return (
-                      <TableCell>
-                        {Number(getKeyValue(item, columnKey)).toLocaleString()}{' '}
-                        원
-                      </TableCell>
-                    );
-                  case 'costMonth':
-                    return (
-                      <TableCell>
-                        {getKeyValue(item, columnKey)}달 (~{' '}
-                        {calculatedMonth === 0 ? 12 : calculatedMonth}
-                        월까지)
-                      </TableCell>
-                    );
-                  default:
-                    return (
-                      <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-                    );
-                }
-              }}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-
-      <AddDepositorModal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        action={onAddClick}
-      />
+      <div className="flex space-x-2">
+        <Button className="cursor-pointer" onClick={fetchData}>
+          <RefreshCwIcon /> 새로고침
+        </Button>
+        <Button
+          className="cursor-pointer"
+          onClick={onCrawlingClick}
+          disabled={isDisableCrawling}
+        >
+          <BotIcon /> 크롤링
+        </Button>
+        <Button className="cursor-pointer">
+          <PlusIcon /> 수동 추가
+        </Button>
+      </div>
+      <div className="rounded-md border max-h-[calc(100vh-12rem)] overflow-y-auto">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  입금 내역이 없습니다.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </>
   );
 };
