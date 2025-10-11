@@ -12,6 +12,10 @@ export const getDashboardMetrics = async () => {
     'GET'
   );
   const { json: codeCount } = await api<{ result: number }>(
+    '/metrics/code/count/all',
+    'GET'
+  );
+  const { json: codeCountMonth } = await api<{ result: number }>(
     '/metrics/code/count',
     'GET'
   );
@@ -28,6 +32,7 @@ export const getDashboardMetrics = async () => {
     depositCount: depositCount?.result,
     depositLatest: depositLatest?.result,
     codeCount: codeCount?.result,
+    codeCountByMonth: codeCountMonth?.result,
     crawlingStatus: crawlingStatus?.result,
     crawlingLatest: crawlingLatest?.result
   };

@@ -22,9 +22,18 @@ import {
   TOTAL_PEOPLE
 } from '@/constants/dashboard.constant';
 import { formatNumber } from '@/lib/utils';
+import { getDashboardMetrics } from '@/actions/dashboard-metrics.action';
 
 const Page = async () => {
-  // TODO: Using API in metrics.
+  const {
+    depositCount,
+    depositLatest,
+    codeCount,
+    codeCountByMonth,
+    crawlingStatus,
+    crawlingLatest
+  } = await getDashboardMetrics();
+  const month = new Date().getMonth() + 1;
 
   return (
     <>
@@ -45,10 +54,10 @@ const Page = async () => {
               입금자 수
             </CardDescription>
             <CardTitle className="text-xl font-semibold tabular-nums @[250px]/card:text-2xl">
-              2 / {TOTAL_PEOPLE} 명
+              {depositCount} / {TOTAL_PEOPLE} 명
             </CardTitle>
             <CardAction>
-              <Badge variant="outline">10월</Badge>
+              <Badge variant="outline">{month}월</Badge>
             </CardAction>
           </CardHeader>
           <CardFooter className="flex-col items-start gap-1.5 text-sm">
@@ -65,10 +74,10 @@ const Page = async () => {
               최근 입금자
             </CardDescription>
             <CardTitle className="text-xl font-semibold tabular-nums @[250px]/card:text-2xl">
-              홍길동 (1,000 원)
+              {depositLatest}
             </CardTitle>
             <CardAction>
-              <Badge variant="outline">10월</Badge>
+              <Badge variant="outline">{month}월</Badge>
             </CardAction>
           </CardHeader>
         </Card>
@@ -80,15 +89,15 @@ const Page = async () => {
               인증코드 발급 회수
             </CardDescription>
             <CardTitle className="text-xl font-semibold tabular-nums @[250px]/card:text-2xl">
-              10 번
+              {codeCountByMonth} 번
             </CardTitle>
             <CardAction>
-              <Badge variant="outline">10월</Badge>
+              <Badge variant="outline">{month}월</Badge>
             </CardAction>
           </CardHeader>
           <CardFooter className="flex-col items-start gap-1.5 text-sm">
             <div className="line-clamp-1 flex gap-2 font-medium">
-              전체 인증코드 발급 회수 : 20 번
+              전체 인증코드 발급 회수 : {codeCount} 번
             </div>
           </CardFooter>
         </Card>
@@ -102,7 +111,9 @@ const Page = async () => {
               최근 크롤링 상태
             </CardDescription>
             <CardTitle className="text-xl font-semibold tabular-nums @[250px]/card:text-2xl">
-              <Badge className="text-sm">성공</Badge>
+              <Badge className="text-sm">
+                {crawlingStatus === 'O' ? '성공' : '실패'}
+              </Badge>
             </CardTitle>
           </CardHeader>
         </Card>
@@ -114,7 +125,7 @@ const Page = async () => {
               최근 크롤링 시각
             </CardDescription>
             <CardTitle className="text-xl font-semibold tabular-nums @[250px]/card:text-2xl">
-              2025-01-01 00:00:00
+              {crawlingLatest}
             </CardTitle>
           </CardHeader>
         </Card>
