@@ -1,14 +1,9 @@
 import '@/style/global.css';
-import '@fortawesome/fontawesome-svg-core/styles.css';
 
 import type { Metadata } from 'next';
-import { Providers } from '@/app/providers';
 import { pretendard } from '@/font';
-import { config } from '@fortawesome/fontawesome-svg-core';
 import { FC, PropsWithChildren } from 'react';
-import { cn } from '@/utils/cn';
-
-config.autoAddCss = false;
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: 'NetflixChecker Admin',
@@ -18,10 +13,9 @@ export const metadata: Metadata = {
 const RootLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="ko">
-      <body className={cn(pretendard.className, 'text-white dark')}>
-        <Providers>
-          <div className="w-full min-h-screen bg-gray-50">{children}</div>
-        </Providers>
+      <body className={pretendard.className}>
+        <div className="w-full min-h-screen bg-gray-50">{children}</div>
+        <Toaster position="top-right" />
       </body>
     </html>
   );

@@ -1,16 +1,15 @@
 'use client';
 
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { SectionTitle } from '@/components/Paragraph/SectionTitle';
-import { Code } from '@heroui/code';
-import { Button } from '@heroui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRefresh } from '@fortawesome/free-solid-svg-icons';
-import { api } from '@/utils/fetch-api';
+import { api } from '@/lib/fetch-api';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { RefreshCwIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Page: FC = () => {
   const [logs, setLogs] = useState<string[]>(['로그가 없습니다.']);
-  const logRef = useRef<HTMLElement | null>(null);
+  const logRef = useRef<HTMLTextAreaElement | null>(null);
 
   const fetchData = useCallback(async () => {
     const { json } = await api<{ result: string[] }>('/metrics/logs', 'GET');
@@ -29,25 +28,23 @@ const Page: FC = () => {
 
   return (
     <>
-      <SectionTitle className="flex justify-between">
-        <span>로그</span>
-        <div>
-          <Button color="primary" onPress={fetchData}>
-            <FontAwesomeIcon icon={faRefresh} />
-          </Button>
-        </div>
-      </SectionTitle>
-      <Code
-        className="w-[calc(100vw-26rem)] h-[calc(100vh-20rem)] overflow-auto"
+      <div className="flex">
+        <Button
+          className="cursor-pointer"
+          onClick={() => {
+            fetchData().then(() => toast.success('로그 새로고침 완료'));
+          }}
+        >
+          <RefreshCwIcon />
+          <span>새로고침</span>
+        </Button>
+      </div>
+      <Textarea
         ref={logRef}
-      >
-        {logs?.map((log, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <p key={`log-${index}`} className="w-full whitespace-pre-wrap">
-            {log}
-          </p>
-        )) ?? ''}
-      </Code>
+        className="h-[calc(100vh-12rem)] overflow-auto disabled:text-black disabled:opacity-100"
+        value={logs.join('\n')}
+        disabled
+      />
     </>
   );
 };
