@@ -1,9 +1,10 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { addToast, Button } from '@heroui/react';
-import { api } from '@/utils/fetch-api';
-import { cn } from '@/utils/cn';
+import { api } from '@/lib/fetch-api';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export const PublicVerify: FC = () => {
   const [code, setCode] = useState<
@@ -19,10 +20,7 @@ export const PublicVerify: FC = () => {
       window.localStorage.getItem('NetflixChecker_Public') || ''
     );
     if (!ok && json !== null) {
-      addToast({
-        title: (json as { message: string }).message,
-        color: 'warning'
-      });
+      toast.warning((json as { message: string }).message);
       return;
     }
 
@@ -33,13 +31,13 @@ export const PublicVerify: FC = () => {
     <>
       <p className="text-center text-lg font-semibold">
         넷플릭스에서
-        <span className="bg-red-500 py-1 px-1.5 rounded-lg mx-1">
+        <span className="bg-red-500 py-1 px-1.5 rounded-lg mx-1 text-white">
           이메일로 받기
         </span>
         를 누른 후
         <br />
-        <span className="py-1 px-1.5 rounded-lg bg-blue-500 mx-1">
-          시작하기
+        <span className="py-1 px-1.5 rounded-lg bg-black mx-1 text-white">
+          인증하기
         </span>
         를 누르면 완료 버튼이 나와요.
       </p>
@@ -52,20 +50,19 @@ export const PublicVerify: FC = () => {
         <Button
           type="button"
           color="primary"
-          className={cn('w-80', !code && 'hidden')}
-          as="a"
-          href={code?.link}
+          className={cn('w-80 cursor-pointer', !code && 'hidden')}
+          asChild
         >
-          완료하기
+          <a href={code?.link}>완료하기</a>
         </Button>
         <Button
           type="button"
           color={code ? 'default' : 'primary'}
-          className="w-80"
-          onPress={onStartClick}
-          isDisabled={code !== undefined}
+          className="w-80 cursor-pointer"
+          onClick={onStartClick}
+          disabled={code !== undefined}
         >
-          시작하기
+          인증하기
         </Button>
       </div>
     </>
