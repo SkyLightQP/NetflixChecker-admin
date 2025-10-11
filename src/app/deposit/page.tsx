@@ -69,11 +69,14 @@ const columns: ColumnDef<DepositPayload>[] = [
     accessorKey: 'costMonth',
     header: '입금 인정 기간',
     cell: ({ row }) => {
-      const calculatedMonth =
-        (new Date(row.getValue('date')).getMonth() +
-          Number(row.getValue('costMonth'))) %
-        12;
-      return `${row.getValue('costMonth')}개월 (~${calculatedMonth === 0 ? 12 : calculatedMonth}월까지)`;
+      const startDate = new Date(row.getValue('date'));
+      const costMonth = Number(row.getValue('costMonth'));
+      // Add costMonth months to startDate
+      const endDate = new Date(startDate);
+      endDate.setMonth(startDate.getMonth() + costMonth);
+      const endMonth = endDate.getMonth() + 1; // getMonth() is 0-based
+      const endYear = endDate.getFullYear();
+      return `${costMonth}개월 (~${endYear}년 ${endMonth}월까지)`;
     }
   }
 ];
