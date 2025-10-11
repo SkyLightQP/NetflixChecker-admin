@@ -33,7 +33,7 @@ const SidebarTemplate: FC<PropsWithChildren> = ({ children }) => {
       }
     };
 
-    fetchData().then();
+    fetchData();
   }, [router, pathname]);
 
   if (EXCLUDE_SIDEBAR_PATHS.includes(pathname)) {
