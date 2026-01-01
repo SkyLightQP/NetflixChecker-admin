@@ -72,10 +72,19 @@ const columns: ColumnDef<DepositPayload>[] = [
       const startDate = new Date(row.getValue('date'));
       const costMonth = Number(row.getValue('costMonth'));
       const endDate = new Date(startDate);
-      endDate.setMonth(startDate.getMonth() + costMonth);
-      const endMonth = endDate.getMonth(); // 입금 당월 포함 계산
+      endDate.setMonth(startDate.getMonth() + costMonth - 1);
+      const endMonth = endDate.getMonth() + 1;
       const endYear = endDate.getFullYear().toString().slice(-2);
-      return `${costMonth}개월 (~${endYear}년 ${endMonth}월까지)`;
+
+      if (costMonth > 1) {
+        return (
+          <span className="text-yellow-500">{`${costMonth}개월 (~${endYear}년 ${endMonth}월까지)`}</span>
+        );
+      }
+
+      return (
+        <span>{`${costMonth}개월 (~${endYear}년 ${endMonth}월까지)`}</span>
+      );
     }
   }
 ];
