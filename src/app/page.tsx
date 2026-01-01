@@ -27,6 +27,7 @@ import {
 import { formatNumber } from '@/lib/utils';
 import { getDashboardMetrics } from '@/actions/dashboard-metrics.action';
 import { Skeleton } from '@/components/ui/skeleton';
+import { toast } from 'sonner';
 
 const Page = () => {
   const [metrics, setMetrics] = useState({
@@ -52,12 +53,13 @@ const Page = () => {
           crawlingStatus: data.crawlingStatus || '',
           crawlingLatest: data.crawlingLatest || ''
         });
-      } finally {
         setLoading(false);
+      } catch {
+        toast.error('대시보드를 불러오는 중 오류가 발생했습니다.');
       }
     };
 
-    void fetchMetrics();
+    fetchMetrics();
   }, []);
 
   if (loading) {
@@ -76,15 +78,15 @@ const Page = () => {
             <Card className="@container/card" key={`skeleton-card-${index}`}>
               <CardHeader>
                 <CardDescription className="flex items-center">
-                  <Skeleton className="h-4 w-[300px]" />
+                  <Skeleton className="h-4 w-full max-w-[300px]" />
                 </CardDescription>
                 <CardTitle className="text-xl font-semibold tabular-nums @[250px]/card:text-2xl">
-                  <Skeleton className="h-4 w-[400px]" />
+                  <Skeleton className="h-4 w-full max-w-[400px]" />
                 </CardTitle>
               </CardHeader>
               <CardFooter className="flex-col items-start gap-1.5 text-sm">
                 <div className="line-clamp-1 flex gap-2 font-medium">
-                  <Skeleton className="h-4 w-[100px]" />
+                  <Skeleton className="h-4 w-full max-w-[100px]" />
                 </div>
               </CardFooter>
             </Card>
