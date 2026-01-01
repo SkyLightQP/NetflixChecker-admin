@@ -1,5 +1,3 @@
-'use server';
-
 import { api } from '@/lib/fetch-api';
 
 export const getDashboardMetrics = async () => {
