@@ -89,6 +89,7 @@ const SettingsPage = () => {
                 <Switch
                   className="cursor-pointer"
                   checked={value === 'true'}
+                  disabled={isSaving}
                   onCheckedChange={(checked) => {
                     setFeatureFlags((prev) => {
                       if (!prev) {
@@ -105,6 +106,7 @@ const SettingsPage = () => {
               ) : (
                 <Input
                   value={value}
+                  disabled={isSaving}
                   onChange={(e) => {
                     setFeatureFlags((prev) => {
                       if (!prev) {
