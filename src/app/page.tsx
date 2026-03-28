@@ -25,7 +25,7 @@ import {
   TOTAL_PEOPLE
 } from '@/constants/dashboard.constant';
 import { formatNumber } from '@/lib/utils';
-import { getDashboardMetrics } from '@/actions/dashboard-metrics.action';
+import { getDashboardMetrics } from '@/apis/dashboard-metrics.api';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
 
