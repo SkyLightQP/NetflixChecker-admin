@@ -22,6 +22,7 @@ import { Alert, AlertTitle } from '@/components/ui/alert';
 import { PAYMENT_DAYS, TOTAL_PEOPLE } from '@/constants/dashboard.constant';
 import { getDashboardMetrics } from '@/apis/dashboard-metrics.api';
 import { getAllFeatureFlags } from '@/apis/feature-flag.api';
+import { formatNumber } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
 
@@ -45,7 +46,8 @@ const Page = () => {
           getDashboardMetrics(),
           getAllFeatureFlags()
         ]);
-        setBankCost(String(featureFlags?.BANK_COST ?? ''));
+        const cost = String(featureFlags?.BANK_COST ?? '').trim();
+        setBankCost(/^\d+$/.test(cost) ? formatNumber(Number(cost)) : cost);
         setMetrics({
           depositCount: data.depositCount || 0,
           depositLatest: data.depositLatest || '',
