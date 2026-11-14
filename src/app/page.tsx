@@ -19,13 +19,10 @@ import {
   UserIcon
 } from 'lucide-react';
 import { Alert, AlertTitle } from '@/components/ui/alert';
-import {
-  PAYMENT_DAYS,
-  SUBSCRIBE_COST,
-  TOTAL_PEOPLE
-} from '@/constants/dashboard.constant';
-import { formatNumber } from '@/lib/utils';
+import { PAYMENT_DAYS, TOTAL_PEOPLE } from '@/constants/dashboard.constant';
 import { getDashboardMetrics } from '@/apis/dashboard-metrics.api';
+import { getAllFeatureFlags } from '@/apis/feature-flag.api';
+import { formatNumber } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
 
@@ -38,13 +35,19 @@ const Page = () => {
     crawlingStatus: '',
     crawlingLatest: ''
   });
+  const [bankCost, setBankCost] = useState('');
   const [loading, setLoading] = useState(true);
   const month = new Date().getMonth() + 1;
 
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
-        const data = await getDashboardMetrics();
+        const [data, featureFlags] = await Promise.all([
+          getDashboardMetrics(),
+          getAllFeatureFlags()
+        ]);
+        const cost = String(featureFlags?.BANK_COST ?? '').trim();
+        setBankCost(/^\d+$/.test(cost) ? formatNumber(Number(cost)) : cost);
         setMetrics({
           depositCount: data.depositCount || 0,
           depositLatest: data.depositLatest || '',
@@ -101,8 +104,7 @@ const Page = () => {
       <Alert className="text-lg [&>svg]:size-6">
         <BanknoteIcon />
         <AlertTitle className="ml-0.5">
-          1개월 당 구독 요금은{' '}
-          <span className="tabular-nums">{formatNumber(SUBSCRIBE_COST)}</span>{' '}
+          1개월 당 구독 요금은 <span className="tabular-nums">{bankCost}</span>{' '}
           원 입니다.
         </AlertTitle>
       </Alert>
